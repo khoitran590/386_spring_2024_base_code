@@ -106,7 +106,8 @@ class Game:
     def game_over(self):
         print('All ships gone: game over!')
         self.sound.gameover()
-        self.update_high_score(self.scoreboard.increment_score())
+        self.update_high_score(self.scoreboard.increment_score(0))
+
         pg.quit()
         sys.exit()
 

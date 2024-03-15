@@ -13,9 +13,6 @@ class AlienFleet:
         self.sb = game.scoreboard
         self.aliens = Group()
 
-        # self.ship_lasers = game.ship.lasers.lasers    # a laser Group
-        # self.aliens_lasers = Lasers(settings=game.settings)
-
         self.ship_lasers = game.ship_lasers.lasers    # a laser Group
         self.aliens_lasers = game.alien_lasers
 
@@ -108,6 +105,10 @@ class AlienFleet:
         # ship_lasers collide with barrier?
 
         # aliens_lasers collide with ship_lasers ?
+        collisions = pg.sprite.groupcollide(self.ship_lasers, self.aliens_lasers.lasers, False, True)
+        if collisions:
+            for laser in collisions:
+                laser.hit()
 
 
     def update(self): 

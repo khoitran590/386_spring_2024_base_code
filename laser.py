@@ -31,7 +31,8 @@ class Laser(Sprite):
     """A class to manage lasers fired from the ship"""
     alien_laser_images = [pg.transform.rotozoom(pg.image.load(f'images/alienlaser{n}.png'), 0, 0.7) for n in range(2)]
     ship_laser_images = [pg.transform.rotozoom(pg.image.load(f'images/laser_{n}.png'), 0, 0.7) for n in range(2)]
-    
+    laser_explosion = [pg.transform.rotozoom(pg.image.load(f'images/explode{n}.png'), 0, 0.7) for n in range(5)]
+
     laser_images = {LaserType.ALIEN: alien_laser_images, LaserType.SHIP: ship_laser_images}
 
     def __init__(self, settings, screen, x, y, sound, type):
@@ -47,9 +48,14 @@ class Laser(Sprite):
         self.speed = settings.laser_speed
         imagelist = Laser.laser_images[type]
         self.timer = Timer(image_list=imagelist, delay=200)
+        self.timer_explosion = Timer(image_list=Laser.laser_explosion, delay=200, is_loop=False)
         sound.shoot_laser(type=self.type)
-
+    def hit(self):
+        self.timer = self.timer_explosion
+        self.speed = 0
     def update(self):
+        if self.timer == self.timer_explosion and self.timer.is_expired():
+            self.kill()
         self.y += self.speed if self.type == LaserType.ALIEN else -self.speed
         # self.y -= self.speed
         self.rect.y = self.y
