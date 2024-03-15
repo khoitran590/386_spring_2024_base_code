@@ -16,7 +16,14 @@ class Alien(Sprite):
                    2 : Timer(image_list=alien_images2)} 
                 #    3 : Timer(image_list=alien_images3)}    
 
-    alien_explosion_images = [pg.image.load(f'images/explode{n}.png') for n in range(7)]
+    alien_explosion_images1 = [pg.transform.rotozoom(pg.image.load(f'images/explode_60_0{n}.png'), 0, 3) for n in range(5)]
+    alien_explosion_images2 = [pg.transform.rotozoom(pg.image.load(f'images/explode_100_0{n}.png'), 0, 3) for n in range(5)]
+    alien_explosion_images3 = [pg.transform.rotozoom(pg.image.load(f'images/explode_300_0{n}.png'), 0, 3) for n in range(5)]
+    alien_explosion_images4 = [pg.transform.rotozoom(pg.image.load(f'images/explode_500_0{n}.png'), 0, 3) for n in range(5)]
+
+    alien_explosion_images = [alien_explosion_images3, alien_explosion_images2, alien_explosion_images1, alien_explosion_images4]
+
+    alien_values = [300, 100, 60, 500]
 
     def __init__(self, game, type):
         super().__init__()
@@ -36,7 +43,7 @@ class Alien(Sprite):
         # self.timer_normal = Timer(image_list=self.alien_types[type])
                       
         self.timer_normal = Alien.alien_timers[type]              
-        self.timer_explosion = Timer(image_list=Alien.alien_explosion_images, is_loop=False)  
+        self.timer_explosion = Timer(image_list=Alien.alien_explosion_images[self.type], is_loop=False)  
         self.timer = self.timer_normal                                    
 
     def check_edges(self): 
@@ -49,7 +56,7 @@ class Alien(Sprite):
         if not self.dying:
             self.dying = True 
             self.timer = self.timer_explosion
-            self.sb.increment_score()
+            self.sb.increment_score(Alien.alien_values[self.type])
     def update(self): 
         if self.timer == self.timer_explosion and self.timer.is_expired():
             self.kill()
