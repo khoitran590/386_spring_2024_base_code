@@ -18,9 +18,16 @@ class Scoreboard:
         self.score_rect = None
         self.prep_score()
 
+        self.game = game
+        self.current_score = 0
+
     def increment_score(self): 
+        
         self.score += self.settings.alien_points
         self.prep_score()
+
+        self.current_score += 1
+        return self.current_score
 
     def prep_score(self): 
         score_str = str(self.score)
