@@ -36,6 +36,8 @@ class LaunchScreen:
 
     def run(self):
         running = True
+        background_music = pg.mixer.Sound('sounds/backgroundmusic.wav')
+        background_music.play(loops=-1)  # -1 means the sound will loop indefinitely
         while running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -50,6 +52,7 @@ class LaunchScreen:
             self.screen.blit(self.launch_image, self.launch_image_rect)  # Draw the image
             self.draw_button(self.play_button, "Play Game")
             pg.display.flip()
+        background_music.stop()
 
 class Game:
     def __init__(self):

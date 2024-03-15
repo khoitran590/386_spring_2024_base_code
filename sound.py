@@ -38,6 +38,6 @@ class Sound:
 
     def gameover(self): 
         self.stop_bg() 
-        pg.mixer.music.load('sounds/gameover.wav')
-        self.play_bg()
+        gameover_sound = pg.mixer.Sound('sounds/gameover.wav')
+        gameover_sound.play()
         time.sleep(2.8)
