@@ -53,7 +53,6 @@ class LaunchScreen:
 
 class Game:
     def __init__(self):
-        pg.init()
         self.settings = Settings()
         size = self.settings.screen_width, self.settings.screen_height   # tuple
         self.screen = pg.display.set_mode(size=size)
@@ -107,7 +106,6 @@ class Game:
         print('All ships gone: game over!')
         self.sound.gameover()
         self.update_high_score(self.scoreboard.increment_score(0))
-
         pg.quit()
         sys.exit()
 

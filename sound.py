@@ -40,4 +40,4 @@ class Sound:
         self.stop_bg() 
         pg.mixer.music.load('sounds/gameover.wav')
         self.play_bg()
-        # time.sleep(2.8)
+        time.sleep(2.8)

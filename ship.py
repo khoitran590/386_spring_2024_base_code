@@ -3,7 +3,8 @@ from pygame.sprite import Sprite
 from laser import Lasers
 from vector import Vector
 from sys import exit
-from timer import  Timer
+from timer import Timer
+from laser import LaserType
 
 
 class Ship(Sprite):
@@ -51,6 +52,7 @@ class Ship(Sprite):
     def fire(self):
         if len(self.lasers.lasers) < self.settings.lasers_allowed:
             self.lasers.add()
+            self.sound.shoot_laser(type=LaserType.SHIP)  # Play the laser sound
 
     def open_fire(self): self.firing = True
     def cease_fire(self): self.firing = False
@@ -69,12 +71,13 @@ class Ship(Sprite):
             print('SHIP IS HIT !!!!!!!!!!!!!!!!!!!!!')
             self.dying = True 
             self.timer = self.timer_explosion
+            self.sound.play_explosion()  # Play the explosion sound
 
     def really_dead(self):
         self.ships_left -= 1
         print(f'Ship is dead! Only {self.ships_left} ships left')
         self.game.reset() if self.ships_left > 0 else self.game.game_over()
-
+        
     def update(self):
         if self.timer == self.timer_explosion and self.timer.is_expired():
             print('ship timer has expired it is now really dead ......')
