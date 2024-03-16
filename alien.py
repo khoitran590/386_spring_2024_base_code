@@ -10,20 +10,20 @@ class Alien(Sprite):
     alien_images0 = [pg.transform.rotozoom(pg.image.load(f'images/alien__0{n}.png'), 0, 0.7) for n in range(2)]
     alien_images1 = [pg.transform.rotozoom(pg.image.load(f'images/alien__1{n}.png'), 0, 0.7) for n in range(2)]
     alien_images2 = [pg.transform.rotozoom(pg.image.load(f'images/alien__2{n}.png'), 0, 0.7) for n in range(2)]
-
+    
     alien_timers = {0 : Timer(image_list=alien_images0), 
                    1 : Timer(image_list=alien_images1), 
                    2 : Timer(image_list=alien_images2)} 
-                #    3 : Timer(image_list=alien_images3)}    
+                   # 3 : Timer(image_list=alien_images3)}    
 
     alien_explosion_images1 = [pg.transform.rotozoom(pg.image.load(f'images/explode_60_0{n}.png'), 0, 3) for n in range(5)]
     alien_explosion_images2 = [pg.transform.rotozoom(pg.image.load(f'images/explode_100_0{n}.png'), 0, 3) for n in range(5)]
     alien_explosion_images3 = [pg.transform.rotozoom(pg.image.load(f'images/explode_300_0{n}.png'), 0, 3) for n in range(5)]
-    alien_explosion_images4 = [pg.transform.rotozoom(pg.image.load(f'images/explode_500_0{n}.png'), 0, 3) for n in range(5)]
+    
 
-    alien_explosion_images = [alien_explosion_images3, alien_explosion_images2, alien_explosion_images1, alien_explosion_images4]
+    alien_explosion_images = [alien_explosion_images3, alien_explosion_images2, alien_explosion_images1]
 
-    alien_values = [300, 100, 60, 500]
+    alien_values = [300, 100, 60]
 
     def __init__(self, game, type):
         super().__init__()
@@ -41,10 +41,10 @@ class Alien(Sprite):
         
         # self.timer_normal = Timer(image_list=self.alien_images)   
         # self.timer_normal = Timer(image_list=self.alien_types[type])
-                      
-        self.timer_normal = Alien.alien_timers[type]              
-        self.timer_explosion = Timer(image_list=Alien.alien_explosion_images[self.type], is_loop=False)  
-        self.timer = self.timer_normal                                    
+        if type < 3:              
+            self.timer_normal = Alien.alien_timers[type]              
+            self.timer_explosion = Timer(image_list=Alien.alien_explosion_images[self.type], is_loop=False)  
+            self.timer = self.timer_normal                                    
 
     def check_edges(self): 
         screen_rect = self.screen.get_rect()

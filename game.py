@@ -59,7 +59,7 @@ class Game:
         self.screen = pg.display.set_mode(size=size)
         pg.display.set_caption("Alien Invasion")
 
-        self.sound = Sound(bg_music="sounds/startrek.wav")
+        self.sound = Sound(bg_music='sounds/backgroundmusic.wav')
         self.scoreboard = Scoreboard(game=self)  
                                     
         self.ship_lasers = Lasers(settings=self.settings, type=LaserType.SHIP)
@@ -120,7 +120,7 @@ class Game:
             self.ship.update()
             self.alien_fleet.update()
             self.barriers.update()
-            # self.lasers.update()
+            #self.lasers.update()
             self.scoreboard.update()
             pg.display.flip()
 
