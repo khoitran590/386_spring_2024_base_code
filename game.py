@@ -42,7 +42,8 @@ class LaunchScreen:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
-                    quit()
+                    #quit()
+                    self.display_start_over_button()  
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     mouse_pos = event.pos
                     if self.play_button.collidepoint(mouse_pos):
@@ -103,25 +104,74 @@ class Game:
         self.barriers.reset()
         self.ship.reset()
         self.alien_fleet.reset()
+        self.scoreboard.reset()
         
+
+    '''def game_over(self):
+        print('All ships gone: game over!')
+        self.sound.gameover()
+        self.update_high_score(self.scoreboard.increment_score(0))
+        pg.quit()
+        #sys.exit()
+        #self.game_over_flag = True  # Set the game_over_flag to True'''
+
+    '''def game_over(self):
+        print('All ships gone: game over!')
+        self.sound.gameover()
+        self.update_high_score(self.scoreboard.increment_score(0))
+        
+        # Display "Game Over" message on the screen
+        font = pg.font.Font(None, 48)
+        game_over_text = font.render("Game Over", True, (255, 255, 255))
+        text_rect = game_over_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2))
+        self.screen.blit(game_over_text, text_rect)
+        pg.display.flip()
+        
+        # Wait for a short time before quitting
+        pg.time.delay(3000)  # 3000 milliseconds (3 seconds)
+        sys.exit() '''
 
     def game_over(self):
         print('All ships gone: game over!')
         self.sound.gameover()
         self.update_high_score(self.scoreboard.increment_score(0))
-        pg.quit()
-        sys.exit()
+        
+        # Display "Game Over" message on the screen
+        font = pg.font.Font(None, 48)
+        game_over_text = font.render("Game Over", True, (255, 255, 255))
+        text_rect = game_over_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2))
+        self.screen.blit(game_over_text, text_rect)
+        
+        # Display replay option
+        replay_text = font.render("Press R to Replay", True, (255, 255, 255))
+        replay_rect = replay_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2 + 50))
+        self.screen.blit(replay_text, replay_rect)
+        
+        pg.display.flip()
+        
+        # Wait for the player to choose
+        while True:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_r:
+                        self.ship.ships_left = 3 #set the ship left after game over back to 3
+                        self.reset()  # Replay the game
+                        return  # Exit the function after replaying
+    
 
     def play(self):
         self.sound.play_bg()
-        while True:     # at the moment, only exits in gf.check_events if Ctrl/Cmd-Q pressed
-            # gf.check_events(settings=self.settings, ship=self.ship)
+        while True: # at the moment, only exits in gf.check_events if Ctrl/Cmd-Q pressed
+            #gf.check_events(settings=self.settings, ship=self.ship)
             self.handle_events() 
             self.screen.fill(self.settings.bg_color)
             self.ship.update()
             self.alien_fleet.update()
             self.barriers.update()
-            # self.lasers.update()
+            ### self.lasers.update()
             self.scoreboard.update()
             pg.display.flip()
 
@@ -149,7 +199,9 @@ def main():
     game = Game()
     launch_screen = LaunchScreen(game)
     launch_screen.run()  # Show the launch screen first
-    game.play()  # Then start the main game loop
+    game.play() 
+    
+    
 
 if __name__ == '__main__':
     main()
