@@ -42,8 +42,7 @@ class LaunchScreen:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
-                    #quit()
-                    self.display_start_over_button()  
+                    sys.exit()
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     mouse_pos = event.pos
                     if self.play_button.collidepoint(mouse_pos):
@@ -106,31 +105,6 @@ class Game:
         self.alien_fleet.reset()
         self.scoreboard.reset()
         
-
-    '''def game_over(self):
-        print('All ships gone: game over!')
-        self.sound.gameover()
-        self.update_high_score(self.scoreboard.increment_score(0))
-        pg.quit()
-        #sys.exit()
-        #self.game_over_flag = True  # Set the game_over_flag to True'''
-
-    '''def game_over(self):
-        print('All ships gone: game over!')
-        self.sound.gameover()
-        self.update_high_score(self.scoreboard.increment_score(0))
-        
-        # Display "Game Over" message on the screen
-        font = pg.font.Font(None, 48)
-        game_over_text = font.render("Game Over", True, (255, 255, 255))
-        text_rect = game_over_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2))
-        self.screen.blit(game_over_text, text_rect)
-        pg.display.flip()
-        
-        # Wait for a short time before quitting
-        pg.time.delay(3000)  # 3000 milliseconds (3 seconds)
-        sys.exit() '''
-
     def game_over(self):
         print('All ships gone: game over!')
         self.sound.gameover()
@@ -147,6 +121,11 @@ class Game:
         replay_rect = replay_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2 + 50))
         self.screen.blit(replay_text, replay_rect)
         
+        # Display quit option
+        quit_text = font.render("Press Q to Quit", True, (255, 255, 255))
+        quit_rect = quit_text.get_rect(center=(self.settings.screen_width // 2, self.settings.screen_height // 2 + 100))
+        self.screen.blit(quit_text, quit_rect)
+        
         pg.display.flip()
         
         # Wait for the player to choose
@@ -160,6 +139,9 @@ class Game:
                         self.ship.ships_left = 3 #set the ship left after game over back to 3
                         self.reset()  # Replay the game
                         return  # Exit the function after replaying
+                    elif event.key == pg.K_q:
+                        pg.quit()
+                        sys.exit()
     
 
     def play(self):
