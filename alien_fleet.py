@@ -157,7 +157,7 @@ class UFO(Alien):
     def __init__(self, game, fleet):
         super().__init__(game, 3)
         self.timer_norm = Timer(image_list=UFO.ufo_images)
-        self.timer_explosion = Timer(image_list=UFO.ufo_explosion_images, is_loop=False)
+        #self.timer_explosion = Timer(image_list=UFO.ufo_explosion_images, is_loop=False)
         self.timer = self.timer_norm
         self.game = game
         self.fleet = fleet
